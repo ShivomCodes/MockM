@@ -20,7 +20,7 @@
 # 1) API calls → proxied to the Render backend (must stay above the SPA rule)
 [[redirects]]
   from = "/api/*"
-  to = "https://YOUR-SERVICE.onrender.com/api/:splat"
+  to = "https://mockmate-api-rad1.onrender.com/api/:splat"
   status = 200
   force = true
 
