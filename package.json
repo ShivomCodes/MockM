@@ -1,0 +1,25 @@
+{
+  "name": "ai-interviewer",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "dev:server": "npm run dev --workspace=server",
+    "dev:client": "npm run dev --workspace=client",
+    "dev": "concurrently -n server,client -c blue,green \"npm run dev:server\" \"npm run dev:client\"",
+    "build": "npm run build --workspace=client",
+    "lint": "npm run lint --workspace=client",
+    "test:server": "node test/e2e.test.js",
+    "test:client": "node test/client-e2e.test.js",
+    "test": "npm run test:server && npm run test:client",
+    "db:push": "npm run db:push --workspace=server",
+    "db:generate": "npm run db:generate --workspace=server"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.7",
+    "dotenv": "^16.4.5"
+  }
+}

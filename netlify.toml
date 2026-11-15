@@ -1,0 +1,31 @@
+# Netlify configuration — frontend + API proxy
+#
+# The /api/* proxy below is critical: it makes auth requests same-origin
+# (first-party), so Better Auth session cookies work without any
+# cross-site cookie configuration (avoids Safari ITP / third-party
+# cookie blocking entirely).
+#
+# ── ONE-TIME SETUP ──────────────────────────────────────────────────
+# Replace YOUR-SERVICE below with your Render backend URL, e.g.
+#   to = "https://mockmate-api.onrender.com/api/:splat"
+
+[build]
+  base = "client"
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# 1) API calls → proxied to the Render backend (must stay above the SPA rule)
+[[redirects]]
+  from = "/api/*"
+  to = "https://YOUR-SERVICE.onrender.com/api/:splat"
+  status = 200
+  force = true
+
+# 2) SPA fallback for React Router client-side routes
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

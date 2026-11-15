@@ -1,0 +1,35 @@
+# Render Blueprint — deploys the Express backend with one click.
+# In Render: New + → Blueprint → select this repo → fill the prompted
+# env values → Apply.
+#
+# Prompted values (sync: false):
+#   DATABASE_URL      your Supabase connection string
+#                     (Supabase → Project Settings → Database → URI)
+#   GEMINI_API_KEY    your Google AI Studio key
+#   CLIENT_URL        your Netlify site URL, e.g. https://your-site.netlify.app
+#   BETTER_AUTH_URL   this service's own URL, i.e. https://mockmate-api.onrender.com
+#
+# BETTER_AUTH_SECRET is generated automatically (generateValue).
+
+services:
+  - type: web
+    name: mockmate-api
+    runtime: node
+    rootDir: server
+    buildCommand: npm install && npx prisma generate
+    startCommand: node server.js
+    healthCheckPath: /api/health
+    plan: free
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: BETTER_AUTH_SECRET
+        generateValue: true
+      - key: BETTER_AUTH_URL
+        sync: false
+      - key: CLIENT_URL
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
